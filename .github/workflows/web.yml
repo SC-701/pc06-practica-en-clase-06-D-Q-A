@@ -21,7 +21,7 @@ name: Build and deploy Vehiculo Web
 
 env:
   AZURE_WEBAPP_NAME: VehiculosAplicacionWeb    # Nombre real de tu Azure Web App (debe coincidir con el publish profile)
-  AZURE_WEBAPP_PACKAGE_PATH: './Vehiculo.Web'     # Ruta al proyecto API
+  AZURE_WEBAPP_PACKAGE_PATH: './Vehiculo.Web/Razor'     # Ruta al proyecto API
   DOTNET_VERSION: '8.0'                  # VersiÃ³n .NET 8.0 segÃºn tu proyecto
 
 on:
