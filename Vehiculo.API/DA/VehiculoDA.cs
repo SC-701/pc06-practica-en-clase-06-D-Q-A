@@ -76,11 +76,10 @@ namespace DA
             return resultado;
         }
 
-
         public async Task<VehiculoDetalle> Obtener(Guid Id)
         {
             string query = @"ObtenerVehiculoPorID";
-            var resultado = await _sqlConnection.QueryAsync<VehiculoDetalle>(query, //Actualmente no disponible, preguntar a Experto en Base de Datos
+            var resultado = await _sqlConnection.QueryAsync<VehiculoDetalle>(query, 
                 new {Id = Id});
             return resultado.FirstOrDefault();
         }
