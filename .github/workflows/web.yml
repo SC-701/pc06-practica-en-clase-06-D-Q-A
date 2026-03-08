@@ -21,12 +21,14 @@ name: Build and deploy Vehiculo Web
 
 env:
   AZURE_WEBAPP_NAME: VehiculosAplicacionWeb    # Nombre real de tu Azure Web App (debe coincidir con el publish profile)
-  AZURE_WEBAPP_PACKAGE_PATH: './Vehiculo.Web/Razor'     # Ruta al proyecto API
+  AZURE_WEBAPP_PACKAGE_PATH: './Vehiculo.Web'     # Ruta al proyecto API
   DOTNET_VERSION: '8.0'                  # VersiÃ³n .NET 8.0 segÃºn tu proyecto
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'Vehiculo.Web/**'
   workflow_dispatch:
 
 permissions:
@@ -53,24 +55,20 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        run: |
-          cd "Vehiculo.Web"
-          dotnet restore "Razor/Razor.csproj"
-          dotnet restore "Reglas/Reglas.csproj"
-          dotnet restore "Abstracciones/Abstracciones.csproj"
+        run: dotnet restore "Vehiculo.Web/Vehiculo.Web.sln
 
 
-      - name: Build with dotnet (excluding BD project)
+
+      - name: Build with dotnet
         run: |
           cd "Vehiculo.Web"
           dotnet build "Abstracciones/Abstracciones.csproj" --configuration Release --no-restore
           dotnet build "Reglas/Reglas.csproj" --configuration Release --no-restore
           dotnet build "Razor/Razor.csproj" --configuration Release --no-restore
 
-      - name: Run tests (excluding BD project)
+      - name: Run tests 
         run: |
-          cd "Vehiculo.Web"
-          dotnet test "Razor/Razor.csproj" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
+          dotnet test "Vehiculo.Web/Vehiculo.Web.sln" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
 
       - name: dotnet publish
         run: dotnet publish "Vehiculo.Web/Razor/Razor.csproj" -c Release -o ./publish --no-restore
