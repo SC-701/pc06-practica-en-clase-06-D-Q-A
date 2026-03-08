@@ -27,8 +27,6 @@ env:
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - ''
   workflow_dispatch:
 
 permissions:
@@ -103,6 +101,6 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AzureWebWeb }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_WEB }}
           package: .
           respect-funcignore: true
